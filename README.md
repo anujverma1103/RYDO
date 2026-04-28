@@ -1,60 +1,92 @@
-# RYDO
+# 🚗 RYDO — Ride Booking App
 
-RYDO is a full stack MERN ride booking application for a BCA final year project. It has two roles only: Passenger and Driver. It uses free map services instead of Google Maps.
+> A full-stack ride-hailing web app built with the MERN stack.  
+> Passengers book rides, drivers accept them — all in real-time.
 
-## Features
+![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Socket.io](https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&logoColor=white)
 
-- Passenger and driver registration/login with JWT and bcryptjs.
-- Role-based protected routes for `/passenger/*` and `/driver/*`.
-- Passenger ride booking wizard: locations, vehicle, payment.
-- OpenStreetMap tiles with `react-leaflet`.
-- Nominatim autocomplete and reverse geocoding without an API key.
-- OpenRouteService route drawing with distance and duration.
-- Fare calculation: Auto, Sedan, SUV.
-- Socket.io ride events and live driver location tracking.
-- Driver online/offline toggle and 30-second incoming request cards.
-- OTP-based ride start.
-- COD and Razorpay Test Mode online payments.
-- Passenger ride history, profile, cancellation, and driver rating.
-- Driver earnings, completed ride history, profile, and vehicle display.
-- Seed script with 2 passengers, 3 drivers, and 6 completed rides.
+---
 
-## Tech Stack
+## 💡 About
 
-- Frontend: React, React Router v6, Tailwind CSS, Axios, React Hot Toast, React Icons
-- Backend: Node.js, Express, Mongoose, Express Validator
-- Auth: JWT, bcryptjs
-- Realtime: Socket.io
-- Maps: react-leaflet, Leaflet, OpenStreetMap
-- Search: Nominatim
-- Routes: OpenRouteService
-- Payment: Razorpay Test Mode
+RYDO is a ride booking platform I built to explore full-stack development end-to-end — from JWT auth and REST APIs to real-time communication with Socket.io and live map routing. It supports two roles: **Passenger** and **Driver**, each with their own dashboard and ride flow.
 
-## Project Structure
+No paid APIs were used — everything runs on free, open-source services.
 
-```text
-client/
-  src/
-    components/
-    context/
-    hooks/
-    pages/
-    services/
-    utils/
-server/
-  config/
-  controllers/
-  middleware/
-  models/
-  routes/
-  socket/
-  utils/
+---
+
+## ✨ Features
+
+### 👤 Passenger
+- Register & login with JWT authentication
+- Search pickup & drop locations (Nominatim autocomplete)
+- Choose vehicle — Auto, Sedan, or SUV with fare preview
+- View live route on map with distance & duration
+- Pay via **Razorpay** or **Cash on Delivery**
+- OTP-based ride start for security
+- Real-time driver tracking via Socket.io
+- Ride history, cancellation & driver rating
+- Profile management
+
+### 🚘 Driver
+- Register with vehicle details
+- Go online/offline toggle
+- Incoming ride requests with 30-second countdown
+- Accept, start (OTP), and complete rides
+- Earnings dashboard & ride history
+- Profile management
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 18, React Router v6, Tailwind CSS, Axios |
+| Backend | Node.js, Express.js, Mongoose |
+| Database | MongoDB Atlas |
+| Auth | JWT, bcryptjs |
+| Realtime | Socket.io |
+| Maps | React-Leaflet, OpenStreetMap |
+| Geocoding | Nominatim (free, no key needed) |
+| Routing | OpenRouteService — HeiGIT API |
+| Payment | Razorpay Test Mode |
+
+---
+
+## 📁 Project Structure
+
+```
+RYDO/
+├── client/                  # React Frontend
+│   └── src/
+│       ├── components/      # Map, Sidebar, UI components
+│       ├── context/         # Auth, Ride, Socket contexts
+│       ├── hooks/           # Custom hooks
+│       ├── pages/           # Auth, Passenger, Driver pages
+│       ├── services/        # API, ORS, Nominatim services
+│       └── utils/           # Fare calculator, formatters
+│
+└── server/                  # Node.js Backend
+    ├── config/              # MongoDB connection
+    ├── controllers/         # Auth, Ride, Driver, Payment
+    ├── middleware/          # Auth, Role check, Validation
+    ├── models/              # User, Driver, Ride, Payment
+    ├── routes/              # All API routes
+    ├── socket/              # Socket.io handler
+    └── utils/               # Helpers
 ```
 
-## Environment
+---
 
-Create `.env` in the project root for the backend:
+## ⚙️ Environment Setup
 
+### Backend — create `.env` in root:
 ```env
 MONGO_URI=your_mongodb_atlas_uri
 JWT_SECRET=rydo_super_secret_2024
@@ -62,100 +94,124 @@ PORT=5000
 CLIENT_URL=http://localhost:5173
 RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxxxx
 RAZORPAY_KEY_SECRET=your_razorpay_test_secret
+ORS_API_KEY=your_heigit_api_key
 ```
 
-Create `client/.env` for the frontend:
-
+### Frontend — create `client/.env`:
 ```env
 VITE_API_URL=http://localhost:5000
-VITE_ORS_API_KEY=your_openrouteservice_key
 VITE_RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxxxx
 ```
 
-Get a free OpenRouteService key from `openrouteservice.org`. Razorpay should be configured in Test Mode.
+---
 
-## Setup
+## 🚀 Getting Started
 
 ```bash
+# 1. Clone the repo
+git clone https://github.com/anujverma1103/RYDO.git
+cd RYDO
+
+# 2. Install all dependencies
 npm run install:all
-npm run seed
-npm run dev:server
-npm run dev:client
+
+# 3. Seed demo data
+cd server && node seed.js
+
+# 4. Start backend
+cd server && node index.js
+
+# 5. Start frontend (new terminal)
+cd client && npm run dev
 ```
 
-The backend runs on `http://localhost:5000`. The frontend runs on `http://localhost:5173`.
+- Frontend → `http://localhost:5173`
+- Backend → `http://localhost:5000`
 
-## Demo Accounts
+---
 
-Seeded passengers:
+## 🔑 Demo Accounts
 
-- `passenger1@rydo.com` / `pass123` - Rahul Sharma
-- `passenger2@rydo.com` / `pass123` - Priya Singh
+### Passengers
+| Name | Email | Password |
+|---|---|---|
+| Rahul Sharma | passenger1@rydo.com | pass123 |
+| Priya Singh | passenger2@rydo.com | pass123 |
 
-Seeded drivers:
+### Drivers
+| Name | Email | Password | Vehicle |
+|---|---|---|---|
+| Amit Kumar | driver1@rydo.com | pass123 | Auto |
+| Suresh Yadav | driver2@rydo.com | pass123 | Sedan |
+| Ravi Gupta | driver3@rydo.com | pass123 | SUV |
 
-- `driver1@rydo.com` / `pass123` - Amit Kumar, Auto
-- `driver2@rydo.com` / `pass123` - Suresh Yadav, Sedan
-- `driver3@rydo.com` / `pass123` - Ravi Gupta, SUV
+---
 
-## API Routes
+## 📡 API Reference
 
 ### Auth
-
-- `POST /api/auth/register`
-  Body: `name`, `email`, `password`, `phone`, `role`, optional driver vehicle fields.
-- `POST /api/auth/login`
-  Body: `email`, `password`.
-- `GET /api/auth/me`
-  Requires JWT.
+| Method | Route | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register user/driver |
+| POST | `/api/auth/login` | Login |
+| GET | `/api/auth/me` | Get current user |
 
 ### Passenger
-
-- `GET /api/passenger/profile`
-- `PUT /api/passenger/profile`
-- `POST /api/rides/book`
-- `GET /api/rides/my`
-- `GET /api/rides/:id`
-- `PUT /api/rides/:id/cancel`
-- `POST /api/rides/:id/rate`
-- `POST /api/payment/create-order`
-- `POST /api/payment/verify`
+| Method | Route | Description |
+|---|---|---|
+| POST | `/api/rides/book` | Book a ride |
+| GET | `/api/rides/my` | Ride history |
+| PUT | `/api/rides/:id/cancel` | Cancel ride |
+| POST | `/api/rides/:id/rate` | Rate driver |
 
 ### Driver
+| Method | Route | Description |
+|---|---|---|
+| PUT | `/api/driver/toggle-status` | Go online/offline |
+| GET | `/api/driver/available-rides` | View available rides |
+| PUT | `/api/rides/:id/accept` | Accept ride |
+| PUT | `/api/rides/:id/start` | Start ride (OTP) |
+| PUT | `/api/rides/:id/complete` | Complete ride |
+| GET | `/api/driver/earnings` | View earnings |
 
-- `GET /api/driver/profile`
-- `PUT /api/driver/profile`
-- `PUT /api/driver/toggle-status`
-- `GET /api/driver/available-rides`
-- `PUT /api/rides/:id/accept`
-- `PUT /api/rides/:id/start`
-- `PUT /api/rides/:id/complete`
-- `GET /api/driver/earnings`
-- `GET /api/driver/history`
+### Map
+| Method | Route | Description |
+|---|---|---|
+| POST | `/api/map/route` | Get route between two points |
 
-## Socket Events
+---
 
-Clients emit:
+## 🔌 Socket Events
 
-- `join-room` with the user id.
-- `driver-location` with `rideId`, `driverId`, `lat`, and `lng`.
+| Direction | Event | Payload |
+|---|---|---|
+| Client → Server | `join-room` | `userId` |
+| Client → Server | `driver-location` | `{ rideId, driverId, lat, lng }` |
+| Server → Client | `new-ride-request` | Ride details |
+| Server → Client | `ride-accepted` | Driver details |
+| Server → Client | `ride-started` | OTP |
+| Server → Client | `ride-completed` | Ride summary |
+| Server → Client | `location-update` | `{ lat, lng }` |
 
-Server emits:
+---
 
-- `new-ride-request`
-- `ride-accepted`
-- `ride-started`
-- `ride-completed`
-- `ride-cancelled`
-- `location-update`
+## 🌐 Free Services Used
 
-## Deployment
+| Service | Purpose |
+|---|---|
+| MongoDB Atlas | Database (512MB free tier) |
+| OpenStreetMap | Map tiles |
+| Nominatim | Location search & geocoding |
+| HeiGIT / OpenRouteService | Route drawing (2000 req/day free) |
+| Razorpay | Payment gateway (Test Mode) |
 
-- Frontend: Vercel free tier.
-- Backend: Render free tier.
-- Database: MongoDB Atlas free 512MB cluster.
-- Maps: OpenStreetMap tiles through Leaflet.
-- Routes: OpenRouteService free key with 2000 requests/day.
-- Payment: Razorpay Test Mode.
+---
 
-For deployment, set the same environment variables in the hosting dashboards. `CLIENT_URL` must match the deployed frontend URL, and `VITE_API_URL` must match the deployed backend URL.
+## 👨‍💻 Built By
+
+**Anuj Verma**  
+GitHub: [@anujverma1103](https://github.com/anujverma1103)
+
+---
+
+> ⭐ If you like this project, consider giving it a star!
